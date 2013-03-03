@@ -15,9 +15,9 @@ nomnom.options
 options = nomnom.parse()
 
 if options.email?
-  contacts = new GoogleContacts()
+  contacts = new GoogleContacts(options)
   console.log "Connecting..."
-  contacts.connect options, (err) ->
+  contacts.connect (err) ->
     if err?
       console.log "ERROR: #{err}"
     else

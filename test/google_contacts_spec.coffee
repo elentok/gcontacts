@@ -19,10 +19,10 @@ describe "GoogleContacts", ->
       @options =
         email: 'the-email'
         password: 'the-password'
-      @googleContacts = new GoogleContacts()
+      @googleContacts = new GoogleContacts(@options)
 
     it "creates a new GoogleClientLogin", ->
-      @googleContacts.connect(@options)
+      @googleContacts.connect()
       expect(GoogleClientLogin).to.have.been.calledOnce
       expect(GoogleClientLogin.getCall(0).args[0]).to.eql {
         email: 'the-email'
@@ -31,7 +31,7 @@ describe "GoogleContacts", ->
       }
 
     it "calls GoogleClientLogin.login", ->
-      @googleContacts.connect(@options)
+      @googleContacts.connect()
       expect(GoogleClientLogin.prototype.login).to.have.been.calledOnce
 
     describe "when success", ->
@@ -40,7 +40,7 @@ describe "GoogleContacts", ->
           callback?() if event == 'login-event'
 
         callback = sinon.spy()
-        @googleContacts.connect(@options, callback)
+        @googleContacts.connect(callback)
 
         expect(callback).to.have.been.calledWith(null)
 
@@ -50,8 +50,7 @@ describe "GoogleContacts", ->
           callback?('an-error') if event == 'error-event'
 
         callback = sinon.spy()
-        @googleContacts.connect(@options, callback)
+        @googleContacts.connect(callback)
 
         expect(callback).to.have.been.calledWith('an-error')
-
 
