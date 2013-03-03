@@ -1,0 +1,46 @@
+{
+  "name": "gcontacts",
+  "description": "command line mail client",
+  "version": "0.0.1",
+  "homepage": "https://github.com/elentok/gcontacts",
+  "author": {
+    "name": "David Elentok",
+    "email": "3david@gmail.com",
+    "url": "http://www.elentok.com"
+  },
+  "bin": {
+    "gcontacts": "./bin/gcontacts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/elentok/gcontacts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elentok/gcontacts/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/elentok/gcontacts/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "lib/gcontacts.coffee",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "mocha --recursive --compilers coffee:coffee-script --reporter spec"
+  },
+  "dependencies": {
+    "nomnom": "*",
+    "googleclientlogin": "*"
+  },
+  "devDependencies": {
+    "coffee-script": "1.4.x",
+    "mocha": "1.8.x",
+    "chai": "1.5.x",
+    "sinon": "1.5.x",
+    "sinon-chai": "2.3.x",
+    "sandboxed-module": "0.2.x"
+  }
+}

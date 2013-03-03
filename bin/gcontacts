@@ -1,0 +1,26 @@
+#!/usr/bin/env coffee
+
+GoogleContacts = require '../lib/google_contacts'
+
+nomnom = require 'nomnom'
+nomnom.script('gcontacts')
+nomnom.options
+  email:
+    position: 0
+    required: true
+  password:
+    position: 1
+    required: true
+
+options = nomnom.parse()
+
+if options.email?
+  contacts = new GoogleContacts()
+  console.log "Connecting..."
+  contacts.connect options, (err) ->
+    if err?
+      console.log "ERROR: #{err}"
+    else
+      console.log "Success"
+
+
