@@ -1,6 +1,6 @@
 {
   "name": "gcontacts",
-  "description": "command line mail client",
+  "description": "google contacts client",
   "version": "0.0.1",
   "homepage": "https://github.com/elentok/gcontacts",
   "author": {
@@ -33,7 +33,8 @@
   },
   "dependencies": {
     "nomnom": "*",
-    "googleclientlogin": "*"
+    "googleclientlogin": "*",
+    "request": "*"
   },
   "devDependencies": {
     "coffee-script": "1.4.x",

@@ -21,6 +21,16 @@ if options.email?
     if err?
       console.log "ERROR: #{err}"
     else
-      console.log "Success"
+      console.log "Getting contacts..."
+      contacts.getContacts (err, page) ->
+        if err?
+          console.log "ERROR: #{err}"
+        else
+          console.log "Success"
+          console.log page.startIndex
+          console.log page.itemsPerPage
+          console.log page.totalResults
+          for contact in page.contacts
+            console.log contact
 
 
