@@ -35,10 +35,13 @@ module.exports = class GoogleContacts
       totalResults: feed.openSearch$totalResults.$t
       contacts: []
     for entry in feed.entry
-      page.contacts.push(@_parseEntry(entry))
+      contact = @_parseEntry(entry)
+      page.contacts.push(contact) if contact?
     page
 
   _parseEntry: (entry) ->
+    emails = entry.gd$email
+    return null if emails.length == 0
     {
       id: @_parseId(entry.id.$t),
       name: entry.title.$t
