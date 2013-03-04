@@ -4,7 +4,7 @@ request = require 'request'
 module.exports = class GoogleContacts
   constructor: (@options = {}) ->
     @options.service = 'contacts'
-    @url = "https://google.com/m8/feeds/contacts/#{@options.email}/thin?alt=json"
+    @url = "https://google.com/m8/feeds/contacts/#{@options.email}/thin?alt=json&max-results=9999"
 
   connect: (callback) ->
     @auth = new GoogleClientLogin(@options)
@@ -27,6 +27,7 @@ module.exports = class GoogleContacts
         callback?(null, page)
 
   _parseBody: (body) ->
+    (require 'fs').writeFileSync('contacts1.json', body)
     feed = JSON.parse(body).feed
     page =
       startIndex: feed.openSearch$startIndex.$t
@@ -34,10 +35,19 @@ module.exports = class GoogleContacts
       totalResults: feed.openSearch$totalResults.$t
       contacts: []
     for entry in feed.entry
-      page.contacts.push(
-        name: entry.title.$t
-        email: entry.gd$email[0].address)
+      page.contacts.push(@_parseEntry(entry))
     page
+
+  _parseEntry: (entry) ->
+    {
+      id: @_parseId(entry.id.$t),
+      name: entry.title.$t
+      email: entry.gd$email[0].address
+    }
+
+  _parseId: (id) ->
+    match = /\/base\/(.+)$/.exec(id)
+    if match? then match[1] else null
 
 
 

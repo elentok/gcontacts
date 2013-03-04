@@ -67,11 +67,11 @@ describe "GoogleContacts", ->
       @contacts.auth =
         getAuthId: -> 'the-auth-id'
         
-    it "makes a request to /m8/feeds/contacts/{email}/thin?alt=json", ->
+    it "makes a request to /m8/feeds/contacts/{email}/thin?alt=json&max-results=9999", ->
       @contacts.getContacts()
       expect(request).to.have.been.calledOnce
       expect(request.getCall(0).args[0]).to.eql {
-        url: 'https://google.com/m8/feeds/contacts/the-email/thin?alt=json'
+        url: 'https://google.com/m8/feeds/contacts/the-email/thin?alt=json&max-results=9999'
         headers:
           Authorization: 'GoogleLogin auth=the-auth-id'
       }
@@ -88,6 +88,8 @@ describe "GoogleContacts", ->
               $t: 25
             entry: [
               {
+                id:
+                  $t: 'http://www.google.com/m8/feeds/contacts/bob@bob.com/base/this-is-the-id'
                 title:
                   $t: 'bob'
                 gd$email: [
@@ -105,7 +107,7 @@ describe "GoogleContacts", ->
           startIndex: 1
           itemsPerPage: 25
           totalResults: 124
-          contacts: [ { name: 'bob', email: 'bob@bob.com' } ]
+          contacts: [ { id: 'this-is-the-id', name: 'bob', email: 'bob@bob.com' } ]
         expect(callback.getCall(0).args).to.eql [null, page]
 
 
