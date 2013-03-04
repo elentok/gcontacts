@@ -24,7 +24,7 @@
       "url": "https://github.com/elentok/gcontacts/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "lib/gcontacts.coffee",
+  "main": "lib/google_contacts.coffee",
   "engines": {
     "node": ">= 0.8.0"
   },
