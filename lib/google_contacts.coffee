@@ -41,6 +41,7 @@ module.exports = class GoogleContacts
 
   _parseEntry: (entry) ->
     emails = entry.gd$email
+    return null unless emails?
     return null if emails.length == 0
     {
       id: @_parseId(entry.id.$t),
