@@ -1,7 +1,7 @@
 {
   "name": "gcontacts",
   "description": "google contacts client",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "homepage": "https://github.com/elentok/gcontacts",
   "author": {
     "name": "David Elentok",
