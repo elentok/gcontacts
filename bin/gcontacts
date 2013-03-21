@@ -15,22 +15,22 @@ nomnom.options
 options = nomnom.parse()
 
 if options.email?
-  contacts = new GoogleContacts(options)
+  contacts = new GoogleContacts()
   console.log "Connecting..."
-  contacts.connect (err) ->
-    if err?
-      console.log "ERROR: #{err}"
-    else
-      console.log "Getting contacts..."
-      contacts.getContacts (err, page) ->
-        if err?
-          console.log "ERROR: #{err}"
-        else
-          console.log "Success"
-          console.log page.startIndex
-          console.log page.itemsPerPage
-          console.log page.totalResults
-          for contact in page.contacts
-            console.log contact
 
+  showError = (err) ->
+    console.log "ERROR: #{err}"
+
+  showContacts = (page) ->
+    console.log "Success"
+    console.log page.startIndex
+    console.log page.itemsPerPage
+    console.log page.totalResults
+    for contact in page.contacts
+      console.log contact
+
+  getContacts = ->
+    contacts.getContacts().then(showContacts, showError)
+
+  contacts.connect(options).then(getContacts, showError)
 

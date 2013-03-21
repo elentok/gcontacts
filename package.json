@@ -34,7 +34,8 @@
   "dependencies": {
     "nomnom": "*",
     "googleclientlogin": "*",
-    "request": "*"
+    "request": "*",
+    "q": "*"
   },
   "devDependencies": {
     "coffee-script": "1.4.x",

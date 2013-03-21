@@ -1,30 +1,35 @@
 GoogleClientLogin = require('googleclientlogin').GoogleClientLogin
 request = require 'request'
+Q = require 'q'
 
 module.exports = class GoogleContacts
-  constructor: (@options = {}) ->
+  connect: (@options) ->
     @options.service = 'contacts'
-    @url = "https://google.com/m8/feeds/contacts/#{@options.email}/thin?alt=json&max-results=9999"
+    @_login()
 
-  connect: (callback) ->
+  _login: ->
+    defer = Q.defer()
     @auth = new GoogleClientLogin(@options)
-    @auth.on GoogleClientLogin.events.login, =>
-      callback?(null)
-    @auth.on GoogleClientLogin.events.error, (err) =>
-      callback?(err)
+    @auth.on GoogleClientLogin.events.login, -> defer.resolve()
+    @auth.on GoogleClientLogin.events.error, (err) -> defer.reject(err)
     @auth.login()
+    defer.promise
 
   getContacts: (callback) ->
+    defer = Q.defer()
     params =
-      url: @url
+      url: @_getUrl()
       headers:
         'Authorization': "GoogleLogin auth=#{@auth.getAuthId()}"
     request params, (err, response, body) =>
       if err?
-        callback?(err, null)
+        defer.reject()
       else
-        page = @_parseBody(body)
-        callback?(null, page)
+        defer.resolve @_parseBody(body)
+    defer.promise
+
+  _getUrl: ->
+    "https://google.com/m8/feeds/contacts/#{@options.email}/thin?alt=json&max-results=9999"
 
   _parseBody: (body) ->
     (require 'fs').writeFileSync('contacts1.json', body)
